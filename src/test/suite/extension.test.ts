@@ -70,6 +70,95 @@ suite('Extension Test Suite', () => {
 		});
 	});
 });
+
+suite('Toggle Template String Command', () => {
+	const cmd = 'template-string-converter.toggleTemplateString';
+
+	test('Converts double-quoted string to template string', () => {
+		return withRandomFileEditor('"hello world"', 'ts', async (editor, doc) => {
+			editor.selection = new vscode.Selection(new vscode.Position(0, 5), new vscode.Position(0, 5));
+			await vscode.commands.executeCommand(cmd);
+			await delay(300);
+			assert.strictEqual(doc.getText(), '`hello world`');
+		});
+	});
+
+	test('Converts single-quoted string to template string', () => {
+		return withRandomFileEditor("'hello world'", 'ts', async (editor, doc) => {
+			editor.selection = new vscode.Selection(new vscode.Position(0, 5), new vscode.Position(0, 5));
+			await vscode.commands.executeCommand(cmd);
+			await delay(300);
+			assert.strictEqual(doc.getText(), '`hello world`');
+		});
+	});
+
+	test('Converts template string back to double-quoted string (quoteType: both)', () => {
+		return withRandomFileEditor('`hello world`', 'ts', async (editor, doc) => {
+			editor.selection = new vscode.Selection(new vscode.Position(0, 5), new vscode.Position(0, 5));
+			await vscode.commands.executeCommand(cmd);
+			await delay(300);
+			assert.strictEqual(doc.getText(), '"hello world"');
+		});
+	});
+
+	test('Does not modify text when cursor is not inside a string', () => {
+		return withRandomFileEditor('hello world', 'ts', async (editor, doc) => {
+			editor.selection = new vscode.Selection(new vscode.Position(0, 5), new vscode.Position(0, 5));
+			await vscode.commands.executeCommand(cmd);
+			await delay(300);
+			assert.strictEqual(doc.getText(), 'hello world');
+		});
+	});
+
+	test('Handles empty string', () => {
+		return withRandomFileEditor('""', 'ts', async (editor, doc) => {
+			editor.selection = new vscode.Selection(new vscode.Position(0, 1), new vscode.Position(0, 1));
+			await vscode.commands.executeCommand(cmd);
+			await delay(300);
+			assert.strictEqual(doc.getText(), '``');
+		});
+	});
+
+	test('Converts string with content including special characters', () => {
+		return withRandomFileEditor('"hello $world"', 'ts', async (editor, doc) => {
+			editor.selection = new vscode.Selection(new vscode.Position(0, 5), new vscode.Position(0, 5));
+			await vscode.commands.executeCommand(cmd);
+			await delay(300);
+			assert.strictEqual(doc.getText(), '`hello $world`');
+		});
+	});
+
+	test('Toggles correct string when cursor is at start boundary', () => {
+		return withRandomFileEditor('"hello"', 'ts', async (editor, doc) => {
+			editor.selection = new vscode.Selection(new vscode.Position(0, 1), new vscode.Position(0, 1));
+			await vscode.commands.executeCommand(cmd);
+			await delay(300);
+			assert.strictEqual(doc.getText(), '`hello`');
+		});
+	});
+
+	test('Toggles correct string when cursor is at end boundary', () => {
+		return withRandomFileEditor('"hello"', 'ts', async (editor, doc) => {
+			editor.selection = new vscode.Selection(new vscode.Position(0, 6), new vscode.Position(0, 6));
+			await vscode.commands.executeCommand(cmd);
+			await delay(300);
+			assert.strictEqual(doc.getText(), '`hello`');
+		});
+	});
+
+	test('Toggles multiple cursors independently', () => {
+		return withRandomFileEditor('"foo"\n"bar"', 'ts', async (editor, doc) => {
+			editor.selections = [
+				new vscode.Selection(new vscode.Position(0, 2), new vscode.Position(0, 2)),
+				new vscode.Selection(new vscode.Position(1, 2), new vscode.Position(1, 2)),
+			];
+			await vscode.commands.executeCommand(cmd);
+			await delay(300);
+			assert.strictEqual(doc.getText(), '`foo`\n`bar`');
+		});
+	});
+});
+
 export function delay(ms: number) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }

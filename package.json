@@ -32,6 +32,21 @@
     "lint": "eslint . --ext .ts,.tsx"
   },
   "contributes": {
+    "commands": [
+      {
+        "command": "template-string-converter.toggleTemplateString",
+        "title": "Toggle Template String",
+        "category": "Template String Converter"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "template-string-converter.toggleTemplateString",
+        "key": "ctrl+shift+`",
+        "mac": "cmd+shift+`",
+        "when": "editorTextFocus"
+      }
+    ],
     "configuration": [
       {
         "title": "Template String Converter V2",

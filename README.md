@@ -13,6 +13,7 @@ No more manual quote swapping while building dynamic strings!
 ## 🚀 Features
 
 - **Automated Conversion**: Instantly transforms `'...'` or `"..."` to `` `...` `` when you type `${`.
+- **Manual Toggle**: Use `Ctrl+Shift+\`` (`Cmd+Shift+\`` on Mac) to toggle any string under the cursor between regular quotes and a template string — no need to type `${`. The shortcut is customisable via VS Code's Keyboard Shortcuts editor.
 - **Intelligent Context**: Works within JSX attributes, standard strings, and even nested templates.
 - **Auto-Cleanup**: Optionally reverts backticks to regular quotes if you delete the `${` sequence.
 - **Language Support**: Out-the-box support for JavaScript, TypeScript, JSX, TSX, and Svelte.
@@ -69,6 +70,14 @@ You can customize the extension behavior in your VS Code settings (`settings.jso
 | `template-string-converter.convertOutermostQuotes` | `boolean` | `false` | For nested strings, converts the outermost quotes to backticks. |
 | `template-string-converter.convertWithinTemplateString` | `boolean` | `true` | Enables conversion inside already existing template strings. |
 | `template-string-converter.validLanguages` | `array` | `[...]` | Languages where the extension is active. |
+
+### ⌨️ Keyboard Shortcut
+
+| Command | Windows / Linux | Mac |
+| :--- | :--- | :--- |
+| Toggle Template String | `Ctrl+Shift+\`` | `Cmd+Shift+\`` |
+
+To change the default, open **File → Preferences → Keyboard Shortcuts** (`Ctrl+K Ctrl+S` / `Cmd+K Cmd+S`) and search for **"Toggle Template String"**.
 
 ---
 
