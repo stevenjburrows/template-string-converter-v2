@@ -5,6 +5,49 @@ type QuoteChar = "both" | `'` | `"` | '`';
 type Position = "start" | "end";
 
 export function activate(context: vscode.ExtensionContext) {
+  const toggleCommand = vscode.commands.registerCommand(
+    'template-string-converter.toggleTemplateString',
+    async () => {
+      const editor = vscode.window.activeTextEditor;
+      if (!editor) { return; }
+
+      const configuration = vscode.workspace.getConfiguration();
+      const quoteType = configuration.get<QuoteType>('template-string-converter.quoteType') ?? 'both';
+      const targetQuote = quoteType === 'single' ? "'" : '"';
+
+      const edit = new vscode.WorkspaceEdit();
+      let hasEdits = false;
+
+      for (const selection of editor.selections) {
+        const lineNumber = selection.active.line;
+        const cursorChar = selection.active.character;
+        const lineText = editor.document.lineAt(lineNumber).text;
+
+        const boundaries = findStringBoundaries(lineText, cursorChar);
+        if (!boundaries) { continue; }
+
+        const startPos = new vscode.Position(lineNumber, boundaries.start);
+        const endPos = new vscode.Position(lineNumber, boundaries.end);
+
+        if (boundaries.char === '`') {
+          // Template string → regular string
+          edit.replace(editor.document.uri, new vscode.Range(startPos, startPos.translate(0, 1)), targetQuote);
+          edit.replace(editor.document.uri, new vscode.Range(endPos, endPos.translate(0, 1)), targetQuote);
+        } else {
+          // Regular string → template string
+          edit.replace(editor.document.uri, new vscode.Range(startPos, startPos.translate(0, 1)), '`');
+          edit.replace(editor.document.uri, new vscode.Range(endPos, endPos.translate(0, 1)), '`');
+        }
+        hasEdits = true;
+      }
+
+      if (hasEdits) {
+        await vscode.workspace.applyEdit(edit);
+      }
+    }
+  );
+  context.subscriptions.push(toggleCommand);
+
   let previousDocument: DocumentCopy | undefined = undefined;
   vscode.workspace.onDidChangeTextDocument(async (e) => {
     const configuration = vscode.workspace.getConfiguration();
@@ -455,6 +498,31 @@ const getQuoteIndex = (line: string, quoteChar: QuoteChar, position: Position, c
     }
   }
 };
+
+function findStringBoundaries(lineText: string, cursorChar: number): { start: number, end: number, char: string } | null {
+  const before = lineText.substring(0, cursorChar);
+  const after = lineText.substring(cursorChar);
+
+  const lastBacktickBefore = before.lastIndexOf('`');
+  const firstBacktickAfter = after.indexOf('`');
+  if (lastBacktickBefore >= 0 && firstBacktickAfter >= 0) {
+    return { start: lastBacktickBefore, end: cursorChar + firstBacktickAfter, char: '`' };
+  }
+
+  const lastSingleBefore = before.lastIndexOf("'");
+  const firstSingleAfter = after.indexOf("'");
+  if (lastSingleBefore >= 0 && firstSingleAfter >= 0) {
+    return { start: lastSingleBefore, end: cursorChar + firstSingleAfter, char: "'" };
+  }
+
+  const lastDoubleBefore = before.lastIndexOf('"');
+  const firstDoubleAfter = after.indexOf('"');
+  if (lastDoubleBefore >= 0 && firstDoubleAfter >= 0) {
+    return { start: lastDoubleBefore, end: cursorChar + firstDoubleAfter, char: '"' };
+  }
+
+  return null;
+}
 
 export function deactivate() { }
 
