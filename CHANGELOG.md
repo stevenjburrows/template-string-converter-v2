@@ -1,7 +1,5 @@
 # Change Log
 
-## [0.6.1]
-- Add keyboard shortcut (`Ctrl+Shift+\`` / `Cmd+Shift+\``) to manually toggle a string between regular quotes and a template string. The shortcut is customisable via VS Code's Keyboard Shortcuts editor. Respects the `quoteType` setting when reverting a template string back to a regular string.
 
 ## [0.2.4]
 
@@ -21,3 +19,8 @@
 
 ## [0.4.4]
 - Add svelte to accepted languages add and setting to toggle conversion when within template string
+- 
+## [0.6.1]
+- Add keyboard shortcut (`Ctrl+Shift+\`` / `Cmd+Shift+\``) to manually toggle a string between regular quotes and a template string. The shortcut is customisable via VS Code's Keyboard Shortcuts editor. Respects the `quoteType` setting when reverting a template string back to a regular string.
+- updated packages to version before breaking changes
+- added Vue and Astro languages

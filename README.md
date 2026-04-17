@@ -1,10 +1,10 @@
 # Template String Converter
 
-[![Marketplace](https://img.shields.io/visual-studio-marketplace/v/meganrogge.template-string-converter.svg?label=VS%20Code%20Marketplace)](https://marketplace.visualstudio.com/items?itemName=meganrogge.template-string-converter)
-[![Installs](https://img.shields.io/visual-studio-marketplace/i/meganrogge.template-string-converter.svg)](https://marketplace.visualstudio.com/items?itemName=meganrogge.template-string-converter)
-[![License](https://img.shields.io/github/license/meganrogge/template-string-converter)](LICENSE.txt)
+[![License](https://img.shields.io/github/license/stevenjburrows/template-string-converter-v2)](LICENSE.txt)
 
 **Template String Converter** is a powerful yet lightweight VS Code extension that streamlines your JavaScript and TypeScript development. It automatically converts regular strings (single or double quotes) into template strings (backticks) the moment you start typing a dynamic expression—`${`.
+
+This is a for of [https://github.com/meganrogge/template-string-converter](Megan Roe's) work but with added features and languages
 
 No more manual quote swapping while building dynamic strings!
 
@@ -18,6 +18,7 @@ No more manual quote swapping while building dynamic strings!
 - **Auto-Cleanup**: Optionally reverts backticks to regular quotes if you delete the `${` sequence.
 - **Language Support**: Out-the-box support for JavaScript, TypeScript, JSX, TSX, and Svelte.
 - **Highly Configurable**: Control precisely which quotes to convert and in which languages.
+- **KeyboardShortcut**: You can now use `Ctrl+Shift+\` / `Cmd+Shift+\` to toggle between a string and a template sting
 
 ---
 
@@ -84,23 +85,23 @@ To change the default, open **File → Preferences → Keyboard Shortcuts** (`Ct
 ## 📸 Demos
 
 ### Basic Conversion
-![Basic Demo](https://raw.githubusercontent.com/meganrogge/template-string-converter/master/images/demo.gif)
+![Basic Demo](https://raw.githubusercontent.com/stevenjburrows/template-string-converter-v2/master/images/demo.gif)
 
 ### Auto-Remove on Deletion
-![Auto Remove](https://raw.githubusercontent.com/meganrogge/template-string-converter/master/images/auto-remove.gif)
+![Auto Remove](https://raw.githubusercontent.com/stevenjburrows/template-string-converter-v2/master/images/auto-remove.gif)
 
 ### JSX Property Wrapping
-![JSX Props](https://raw.githubusercontent.com/meganrogge/template-string-converter/master/images/jsx-props.gif)
+![JSX Props](https://raw.githubusercontent.com/stevenjburrows/template-string-converter-v2/master/images/jsx-props.gif)
 
 ---
 
 ## 🛠️ Contributing
 
-Contributions are welcome! If you'd like to help improve Template String Converter:
+Contributions are welcome! If you'd like to help improve Template String Converter V2:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/meganrogge/template-string-converter.git
+   git clone https://github.com/stevenjburrows/template-string-converter-v2git
    ```
 2. **Install dependencies**:
    ```bash
@@ -118,7 +119,7 @@ Contributions are welcome! If you'd like to help improve Template String Convert
 - The extension requires the `${` characters to be typed sequentially inside an existing string.
 - Complex nested string scenarios may require specific setting adjustments (like `convertOutermostQuotes`).
 
-If you find a bug, please [file an issue](https://github.com/meganrogge/template-string-converter/issues).
+If you find a bug, please [file an issue](https://github.com/stevenjburrows/template-string-converter-v2/issues).
 
 ---
 
@@ -126,4 +127,4 @@ If you find a bug, please [file an issue](https://github.com/meganrogge/template
 
 This project is licensed under the **MIT License**. See the [LICENSE](LICENSE.txt) file for details.
 
-Developed with ❤️ by [Megan Rogge](https://github.com/meganrogge).
+Originally Developed with ❤️ by [Megan Rogge](https://github.com/meganrogge).
