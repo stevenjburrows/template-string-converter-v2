@@ -1,4 +1,4 @@
-# Template String Converter
+# Convert to Template String
 
 [![License](https://img.shields.io/github/license/stevenjburrows/template-string-converter-v2)](LICENSE.txt)
 

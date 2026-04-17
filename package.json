@@ -1,7 +1,7 @@
 {
-  "name": "template-string-converter",
-  "displayName": "Template String Converter V2",
-  "description": "Converts a string to a template string when ${ is typed",
+  "name": "convert-to-template-string",
+  "displayName": "Convert to Template String",
+  "description": "Converts a string to a template string when ${ is typed or hotkey is used",
   "version": "0.6.1",
   "engines": {
     "vscode": "^1.49.0"
@@ -23,7 +23,7 @@
     "theme": "dark"
   },
   "main": "./out/extension.js",
-  "publisher": "stevenjburrows",
+  "publisher": "thekiltedcoder",
   "browser": "./out/extension.js",
   "scripts": {
     "vscode:prepublish": "npm run compile",
